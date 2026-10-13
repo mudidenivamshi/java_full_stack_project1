@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Leave - Employee Leave Management System</title>
+    <meta name="description" content="Apply for casual, sick, or earned leave by filling out the leave application form.">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- ===================== NAVIGATION BAR ===================== -->
+    <nav class="navbar">
+        <div class="nav-brand">&#128197; Leave Management System</div>
+        <div class="nav-links">
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/apply-leave}" class="nav-link active">Apply Leave</a>
+            <a th:href="@{/leave-list}" class="nav-link">Leave Requests</a>
+
+            <th:block th:if="${session.isAdmin}">
+                <form th:action="@{/admin/logout}" method="post" style="display:inline;">
+                    <button type="submit" class="nav-link nav-btn-logout">&#128275; Logout Admin</button>
+                </form>
+            </th:block>
+            <th:block th:unless="${session.isAdmin}">
+                <a th:href="@{/admin/login}" class="nav-link nav-admin-link">&#128272; Admin Login</a>
+            </th:block>
+        </div>
+    </nav>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <div class="container">
+
+        <div class="page-header">
+            <h1>Apply for Leave</h1>
+            <p class="page-subtitle">Fill in the details below to submit a leave request</p>
+        </div>
+
+        <!-- Error Message -->
+        <div class="alert alert-error" th:if="${errorMessage}">
+            <strong>&#9888; Error:</strong>
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <div class="form-card">
+            <form th:action="@{/apply-leave}" th:object="${leaveRequest}" method="post">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="employeeName">Employee Name <span class="required">*</span></label>
+                        <input type="text" id="employeeName" th:field="*{employeeName}"
+                               placeholder="Enter your full name" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeId">Employee ID <span class="required">*</span></label>
+                        <input type="text" id="employeeId" th:field="*{employeeId}"
+                               placeholder="e.g., EMP001" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="leaveType">Leave Type <span class="required">*</span></label>
+                    <select id="leaveType" th:field="*{leaveType}" class="form-control">
+                        <option value="">-- Select Leave Type --</option>
+                        <option value="Casual Leave">Casual Leave</option>
+                        <option value="Sick Leave">Sick Leave</option>
+                        <option value="Earned Leave">Earned Leave</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate">Start Date <span class="required">*</span></label>
+                        <input type="date" id="startDate" th:field="*{startDate}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date <span class="required">*</span></label>
+                        <input type="date" id="endDate" th:field="*{endDate}" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reason">Reason for Leave <span class="required">*</span></label>
+                    <textarea id="reason" th:field="*{reason}" rows="4"
+                              placeholder="Briefly explain your reason for leave..."
+                              class="form-control"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="submitLeaveBtn">
+                        &#128228; Apply Leave
+                    </button>
+                    <a th:href="@{/}" class="btn btn-secondary">&#8592; Cancel</a>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Employee Leave Management System | College Project</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<!--
+  admin-login.html - Admin Login Page
+  Simple form that POSTs username and password to /admin/login
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Employee Leave Management System</title>
+    <meta name="description" content="Admin login page for the Employee Leave Management System.">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <!-- ===================== NAVIGATION BAR ===================== -->
+    <nav class="navbar">
+        <div class="nav-brand">&#128197; Leave Management System</div>
+        <div class="nav-links">
+            <a th:href="@{/}" class="nav-link">Dashboard</a>
+            <a th:href="@{/apply-leave}" class="nav-link">Apply Leave</a>
+            <a th:href="@{/leave-list}" class="nav-link">Leave Requests</a>
+            <a th:href="@{/admin/login}" class="nav-link active">Admin Login</a>
+        </div>
+    </nav>
+
+    <!-- ===================== MAIN CONTENT ===================== -->
+    <div class="container">
+
+        <div class="login-wrapper">
+
+            <!-- Page Heading -->
+            <div class="login-header">
+                <div class="login-icon">&#128272;</div>
+                <h1>Admin Login</h1>
+                <p>Only admins can approve or reject leave requests</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="alert alert-error" th:if="${errorMessage}">
+                <strong>&#9888;</strong>
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- ---- Login Form ---- -->
+            <div class="form-card login-card">
+                <form th:action="@{/admin/login}" method="post">
+
+                    <!-- Username -->
+                    <div class="form-group">
+                        <label for="username">Username <span class="required">*</span></label>
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               placeholder="Enter admin username"
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password">Password <span class="required">*</span></label>
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               placeholder="Enter admin password"
+                               class="form-control"
+                               required>
+                    </div>
+
+                    <!-- Login Button -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full" id="adminLoginBtn">
+                            &#128272; Login as Admin
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Default credentials hint (remove in production) -->
+                <div class="login-hint">
+                    <p>&#128161; Default credentials: <strong>admin</strong> / <strong>admin123</strong></p>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top: 16px;">
+                <a th:href="@{/leave-list}" class="nav-link">&#8592; Back to Leave Requests</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <p>&copy; 2024 Employee Leave Management System | College Project</p>
+    </footer>
+
+</body>
+</html>
